@@ -39,5 +39,40 @@ inline fun <reified T> String.jsonToList(): List<T>{
 }
 ```
 
+### 单例模式
+
+1. 不带参数
+
+```kotlin
+class Singleton private constructor(){
+  ...
+  
+    companion object {
+      	//默认LazyThreadSafetyMode.SYNCHRONIZED模式，线程安全
+        val instance: MyOkHttp by lazy {
+            Singleton()
+        }
+}
+```
+
+2. 带参数
+
+```kotlin
+class Singleton private constructor(c: Context){
+  ...
+  
+    companion object {
+    	private var single: Singleton?=null
+      	
+        @Synchronized
+        fun getInstance(context: Context): Singleton {
+            if (single == null) {
+                single = Singleton(context)
+            }
+            return single as Singleton
+        }
+}
+```
+
 
 
